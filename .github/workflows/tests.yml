@@ -1,0 +1,27 @@
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, windows-2019]
+        python-version: ["3.9", "3.10", "3.11"]
+        architecture: ["x64", "x86"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: install access runtime
+        run: |
+          choco install access2016runtime
+      - name: set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install packages
+        run: |
+          pip install comtypes
+          pip install pytest
+          pip install pytest-mock
+      - name: run pytest
+        run: pytest tests/ -v
