@@ -1,3 +1,5 @@
+__version__ = "0.0.1-pre"
+
 import logging
 
 from adotypes.api_constructors import connect  # noqa
